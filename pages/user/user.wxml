@@ -1,0 +1,17 @@
+<!--pages/user/user.wxml-->
+<view id="wifi_account"class="page-section" />
+  <view class="fill_box">
+    <input type="text" placeholder="  WIFI名称" bindfocus="focus" bindblur="blur"
+    value="{{wifi_acc_input}}" bindinput="bindKeyInput_acc"/>
+  </view>
+
+<view id="wifi_mm" class="fill_box">
+    <input type="text" password="{{!open}}" placeholder="  WIFI密码" bindfocus="focus" bindblur="blur"
+    value="{{wifi_mm_input}}" bindinput="bindKeyInput_mm"/>
+    <image src="{{open?'../../img/open_eye.png':'../../img/no_eye.png'}}" class="eye" catchtap="switch" />
+</view>
+
+  <view class="page-section" />
+<button id="connect_button" type="primary" loading="{{loading}}" bindtap="tapName" >
+登录
+</button>
