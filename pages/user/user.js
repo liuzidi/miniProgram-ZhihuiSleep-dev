@@ -1,16 +1,68 @@
 // pages/user/user.js
+const { $Toast } = require('../../lib/iview-weapp/dist/toast/index');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    submit_text: "连接",
-    loading: false,
+    // 输入框
     wifi_acc_input: "",
     wifi_mm_input: "",
-    open: false,//默认不显示密码
-    focus:false,//是否获取焦点
+    focus:true,//是否获取焦点
+
+    // 密码框
+    isPassword : 'password',
+    //显示隐藏密码的单选框
+    checked: false,
+    mima : '显示密码',
+  },
+  loginClick : function() {
+    if (this.data.wifi_acc_input.length == 0) {
+      wx.showToast({
+        title: "账号不允许为空",
+        icon: "error",
+        duration : 1000,
+        })
+        return;
+    }
+    if (this.data.wifi_mm_input.length == 0) {
+      wx.showToast({
+        title: "密码不允许为空",
+        icon: "error",
+        duration : 1000,
+        })
+        return;
+    }
+
+    wx.showToast({
+      title: "连接中",
+      icon: "loading",
+      duration : 5000,
+      success : this.loginSuccess,
+      fail : this.loginFail 
+      })
+  },
+  //延时函数
+  delay : function(milSec) {
+    return new Promise(resolve => {
+      setTimeout(resolve, milSec)
+    })
+  },
+  loginSuccess : function() {
+
+    wx.showToast({
+      title: "连接成功",
+      icon: "success",
+      duration : 1000,
+      })
+  },
+  loginFail : function() {
+    wx.showToast({
+      title: "连接失败请重试",
+      icon: "error",
+      duration : 1000,
+      })
   },
   bindKeyInput_acc: function (e) {
     this.setData({
@@ -22,10 +74,21 @@ Page({
       wifi_mm_input: e.detail.value
     })
   },
-  switch() {
-    this.setData({
-      open: !this.data.open
-    })
+  handleCheckboxChange({ detail = {} }) {
+      if (this.data.mima === '显示密码') {
+          this.setData({
+            mima : '隐藏密码',
+            isPassword : 'text',
+            checked: detail.current
+        }); 
+      } else {
+        this.setData({
+          mima : '显示密码',
+          isPassword : 'password',
+          checked: detail.current
+      }); 
+      }
+      
   },
   focus(){
     this.setData({
@@ -53,8 +116,9 @@ Page({
   send_acc_mm_udp(acc, mm) {
     const udp = wx.createUDPSocket()
     udp.bind()
-    // 连发5次udp连接
+    // 连发2次udp连接
     for (let index = 0; index < 5; index++) {
+      // 发送密钥
       udp.send({
         address: '10.10.100.254',
         port: 48899,
@@ -63,6 +127,7 @@ Page({
     }
     const set_mode = 'AT+WMODE=APSTA' + '\\'+'r'
     const set_acc_mm = 'AT+WSTA='+ acc + ',' + mm + '\\'+'r'
+    // 改变wifi模块的wifi账号密码
     for (let index = 0; index < 2; index++) {
       udp.send({
         address: '10.10.100.254',
@@ -101,7 +166,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+  
   },
 
   /**
@@ -130,5 +195,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
 })

@@ -1,3 +1,10 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "i-button" : "../../lib/iview-weapp/dist/button/index",
+    "i-input" : "../../lib/iview-weapp/dist/input/index",
+    "i-radio-group": "../../lib/iview-weapp/dist/radio-group/index",
+    "i-radio": "../../lib/iview-weapp/dist/radio/index",
+    "i-alert": "../../lib/iview-weapp/dist/alert/index",
+    "i-toast": "../../lib/iview-weapp/dist/toast/index"
+  }
 }
