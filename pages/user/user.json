@@ -5,6 +5,7 @@
     "i-radio-group": "../../lib/iview-weapp/dist/radio-group/index",
     "i-radio": "../../lib/iview-weapp/dist/radio/index",
     "i-alert": "../../lib/iview-weapp/dist/alert/index",
-    "i-toast": "../../lib/iview-weapp/dist/toast/index"
+    "i-toast": "../../lib/iview-weapp/dist/toast/index",
+    "i-panel": "../../lib/iview-weapp/dist/panel/index"
   }
 }

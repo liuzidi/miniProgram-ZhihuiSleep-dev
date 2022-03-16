@@ -1,11 +1,9 @@
 // pages/user/user.js
 const { $Toast } = require('../../lib/iview-weapp/dist/toast/index');
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
+    //是否在登录界面
+    loginIsDisabled : false,
     // 输入框
     wifi_acc_input: "",
     wifi_mm_input: "",
@@ -16,8 +14,12 @@ Page({
     //显示隐藏密码的单选框
     checked: false,
     mima : '显示密码',
+    //加载条
+    loading: false,
   },
+
   loginClick : function() {
+    var that = this;
     if (this.data.wifi_acc_input.length == 0) {
       wx.showToast({
         title: "账号不允许为空",
@@ -34,15 +36,43 @@ Page({
         })
         return;
     }
-
-    wx.showToast({
-      title: "连接中",
-      icon: "loading",
-      duration : 5000,
-      success : this.loginSuccess,
-      fail : this.loginFail 
-      })
+    this.setData({
+      loading : true,
+    })
+    wx.request({
+      url: 'http://121.196.40.63:80/LoginQuery', //后端查询账号密码接口
+      method : 'POST',
+      data: {
+          UserNm : this.data.wifi_acc_input,
+      },
+      header: {
+        'content-type': 'application/json' 
+      },
+      success (res) {
+        if (res.data.PassWord === that.data.wifi_mm_input) {
+          wx.showToast({
+            title: "连接成功",
+            icon: "success",
+            duration : 1000,
+            })
+            that.setData({
+              loading : false,
+              loginIsDisabled : true,
+            })
+        } else {
+          wx.showToast({
+            title: "账号或密码错误",
+            icon: "error",
+            duration : 1000,
+            })
+            that.setData({
+              loading : false,
+            })
+        }
+      }
+    })
   },
+
   //延时函数
   delay : function(milSec) {
     return new Promise(resolve => {
@@ -50,13 +80,13 @@ Page({
     })
   },
   loginSuccess : function() {
-
     wx.showToast({
       title: "连接成功",
       icon: "success",
       duration : 1000,
       })
   },
+  
   loginFail : function() {
     wx.showToast({
       title: "连接失败请重试",
