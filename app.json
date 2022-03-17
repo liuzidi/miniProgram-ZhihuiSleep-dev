@@ -1,48 +1,49 @@
 {
-  "pages":[
+  "pages": [
+    "pages/setting/setting",
     "pages/user/user",
     "pages/home/home",
     "pages/data/data",
-    "pages/setting/setting",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/userInfo/userInfo"
   ],
-  "window":{
-    "backgroundTextStyle":"dark",
+  "window": {
+    "backgroundTextStyle": "dark",
     "backgroundColor": "#0094ff",
     "navigationBarBackgroundColor": "#0094ff",
     "navigationBarTitleText": "知惠睡眠",
-    "navigationBarTextStyle":"white",
+    "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true
   },
+  "sitemapLocation": "sitemap.json",
   "tabBar": {
     "list": [
-    {
-      "pagePath": "pages/user/user",
-      "text": "用户",
-      "iconPath": "icon/_user.png",
-      "selectedIconPath": "icon/_user.png"
-    },
-    {
-      "pagePath": "pages/home/home",
-      "text": "主页",
-      "iconPath": "icon/_home.png",
-      "selectedIconPath": "icon/_home.png"
-    },
-    {
-      "pagePath": "pages/data/data",
-      "text": "数据",
-      "iconPath": "icon/_data.png",
-      "selectedIconPath": "icon/_data.png"
-    },
-    {
-      "pagePath": "pages/setting/setting",
-      "text": "设置",
-      "iconPath": "icon/_setting.png",
-      "selectedIconPath": "icon/_setting.png"
-    }
-  ],
-  "color": "#000000"
-  },
-  "sitemapLocation": "sitemap.json"
+      {
+        "pagePath": "pages/userInfo/userInfo",
+        "text": "用户",
+        "iconPath": "icon/_user.png",
+        "selectedIconPath": "icon/_user.png"
+      },
+      {
+        "pagePath": "pages/home/home",
+        "text": "主页",
+        "iconPath": "icon/_home.png",
+        "selectedIconPath": "icon/_home.png"
+      },
+      {
+        "pagePath": "pages/data/data",
+        "text": "数据",
+        "iconPath": "icon/_data.png",
+        "selectedIconPath": "icon/_data.png"
+      },
+      {
+        "pagePath": "pages/setting/setting",
+        "text": "设置",
+        "iconPath": "icon/_setting.png",
+        "selectedIconPath": "icon/_setting.png"
+      }
+    ],
+    "color": "#000000"
+  }
 }

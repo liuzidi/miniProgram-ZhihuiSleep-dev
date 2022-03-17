@@ -1,29 +1,13 @@
 <!--pages/user/user.wxml-->
-<!-- <view id="wifi_account"class="page-section" />
-  <view class="fill_box">
-    <input type="text" placeholder="  WIFI名称" bindfocus="focus" bindblur="blur"
-    value="{{wifi_acc_input}}" bindinput="bindKeyInput_acc"/>
-  </view>
-
-<view id="wifi_mm" class="fill_box">
-    <input type="text" password="{{!open}}" placeholder="  WIFI密码" bindfocus="focus" bindblur="blur"
-    value="{{wifi_mm_input}}" bindinput="bindKeyInput_mm"/>
-    <image src="{{open?'../../img/open_eye.png':'../../img/no_eye.png'}}" class="eye" catchtap="switch" />
-</view> -->
-
-<!-- <button id="connect_button" type="primary" loading="{{loading}}" bindtap="tapName" >
-登录
-</button>
-
-<view id="wifi_mm" class="fill_box">
-    <input type="text" password="{{!open}}" placeholder="  WIFI" bindfocus="focus" bindblur="blur"
-    value="{{wifi_mm_input}}" bindinput="bindKeyInput_mm"/>
-</view> -->
 
 <i-panel title="用户登录" disabled = "{{loginIsDisabled}}">
     <i-input type="text" model:value="{{wifi_acc_input }}" title="账号" placeholder="请输入账号" mode="wrapped" bindfocus="focus"  bindinput="bindKeyInput_acc" maxlength="10"/>
+
     <i-input type= "{{isPassword}}" model:value="{{wifi_mm_input }}" title="密码" placeholder="请输入密码" mode="wrapped" bindfocus="focus"  bindinput="bindKeyInput_acc" maxlength="20" />
+
     <i-radio value="{{mima}}" checked="{{checked}}" bindchange="handleCheckboxChange"
     position="left"/>
+
     <i-button bind:click="loginClick" loading="{{loading}}" type="info" shape="circle" size="large">登录</i-button>
+
 </i-panel>

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "i-card": "../../lib/iview-weapp/dist/card/index",
+    "i-cell-group": "../../lib/iview-weapp/dist/cell-group/index",
+    "i-cell": "../../lib/iview-weapp/dist/cell/index"
+  }
+}

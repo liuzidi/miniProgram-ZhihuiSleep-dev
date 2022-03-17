@@ -1,5 +1,4 @@
 // pages/user/user.js
-const { $Toast } = require('../../lib/iview-weapp/dist/toast/index');
 Page({
   data: {
     //是否在登录界面
@@ -51,13 +50,19 @@ Page({
       success (res) {
         if (res.data.PassWord === that.data.wifi_mm_input) {
           wx.showToast({
-            title: "连接成功",
+            title: "登录成功",
             icon: "success",
             duration : 1000,
             })
             that.setData({
               loading : false,
               loginIsDisabled : true,
+            });
+            const app = getApp();
+            app.globalData.username = res.data.UserNm;
+            app.globalData.userID = res.data.UserID;
+            wx.switchTab({
+              url: '../userInfo/userInfo',
             })
         } else {
           wx.showToast({
@@ -70,13 +75,6 @@ Page({
             })
         }
       }
-    })
-  },
-
-  //延时函数
-  delay : function(milSec) {
-    return new Promise(resolve => {
-      setTimeout(resolve, milSec)
     })
   },
   loginSuccess : function() {
@@ -118,7 +116,6 @@ Page({
           checked: detail.current
       }); 
       }
-      
   },
   focus(){
     this.setData({
@@ -128,50 +125,6 @@ Page({
   blur(){
     this.setData({
       focus:false
-    })
-  },
-  tapName: function(event) {
-    this.setData({
-      loading: !this.data.loading
-    })
-    wx.showToast({
-      title: '连接中',
-      icon: "loading",
-      duration: 1000
-      })
-    var acc = this.data.wifi_acc_input
-    var mm = this.data.wifi_mm_input
-    this.send_acc_mm_udp(acc, mm)
-  },
-  send_acc_mm_udp(acc, mm) {
-    const udp = wx.createUDPSocket()
-    udp.bind()
-    // 连发2次udp连接
-    for (let index = 0; index < 5; index++) {
-      // 发送密钥
-      udp.send({
-        address: '10.10.100.254',
-        port: 48899,
-        message: 'www.usr.cn'
-      })
-    }
-    const set_mode = 'AT+WMODE=APSTA' + '\\'+'r'
-    const set_acc_mm = 'AT+WSTA='+ acc + ',' + mm + '\\'+'r'
-    // 改变wifi模块的wifi账号密码
-    for (let index = 0; index < 2; index++) {
-      udp.send({
-        address: '10.10.100.254',
-        port: 48899,
-        message: set_mode
-      })
-      udp.send({
-        address: '10.10.100.254',
-        port: 48899,
-        message: set_acc_mm
-      })
-    }
-    this.setData({
-      loading: !this.data.loading
     })
   },
   onLoad: function (options) {

@@ -1,0 +1,14 @@
+<!--pages/userInfo/userInfo.wxml-->
+<i-card title="用户名 ： {{username}}" extra="ID : {{userID}}" thumb="https://i.loli.net/2017/08/21/599a521472424.jpg">
+</i-card>
+<i-cell-group>
+    <i-cell title="修改密码" is-link></i-cell>
+    <i-cell title="退出登录" is-link></i-cell>
+    <i-cell title="模式">
+        <switch slot="footer" checked />
+    </i-cell>
+</i-cell-group>
+<i-cell title="性别:{{Gender}}" ></i-cell>
+<i-cell title="年龄:{{Age}}" ></i-cell>
+<i-cell title="城市:{{City}}" ></i-cell>
+<i-cell title="手机:{{Telephone}}" ></i-cell>
