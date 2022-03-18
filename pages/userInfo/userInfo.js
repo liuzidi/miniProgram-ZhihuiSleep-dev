@@ -5,6 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //是否展示用户信息
+    isShowedInUser : false,
+
     username: '',
     userID : '',
     Gender : '',
@@ -13,6 +16,11 @@ Page({
     Telephone : '',
   },
 
+  switchShowed: function() {
+    this.setData({
+      isShowedInUser : !this.data.isShowedInUser,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -46,6 +54,11 @@ Page({
     })
   },
 
+  returnLogin() {
+    wx.navigateTo({
+      url: '../user/user',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

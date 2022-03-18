@@ -5,6 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    bindWIFISSID : '',
+    bindState:'',
+    isBindWifi : false,
 
   },
 
@@ -25,7 +28,7 @@ Page({
     const udp = wx.createUDPSocket()
     udp.bind()
     // 连发2次udp连接
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < 2; index++) {
       // 发送密钥
       udp.send({
         address: '10.10.100.254',
@@ -51,6 +54,32 @@ Page({
     this.setData({
       loading: !this.data.loading
     })
+    udp.close();
+  },
+
+  clickTest: function() {
+    const udp = wx.createUDPSocket();
+    udp.bind();
+    udp.connect({
+      address: '10.10.100.254',
+      port:'48899'
+    })
+    udp.onListening(function(){
+
+    });
+    udp.onMessage(function(res){
+      wx.showToast({
+        title: res.message,
+        duration:1000
+      })
+      console.log(res.message)
+    })
+    const mes = '+++'
+    udp.write({
+      address: '10.10.100.254',
+      port: 48899,
+      message: mes,
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -63,7 +92,17 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    var that = this;
+    if (!this.data.isBindWifi) {
+      that.setData({
+        bindWIFISSID : '未绑定',
+        bindState:'立即绑定WIFI',
+      })
+    } else {
+      that.setData({
+        bindState : '修改绑定WIFI'
+      })
+    }
   },
 
   /**

@@ -1,8 +1,6 @@
 // pages/user/user.js
 Page({
   data: {
-    //是否在登录界面
-    loginIsDisabled : false,
     // 输入框
     wifi_acc_input: "",
     wifi_mm_input: "",
@@ -56,7 +54,6 @@ Page({
             })
             that.setData({
               loading : false,
-              loginIsDisabled : true,
             });
             const app = getApp();
             app.globalData.username = res.data.UserNm;
@@ -75,6 +72,11 @@ Page({
             })
         }
       }
+    })
+  },
+  otherLoginClick(){
+    wx.switchTab({
+      url: '../userInfo/userInfo',
     })
   },
   loginSuccess : function() {
@@ -97,11 +99,13 @@ Page({
       wifi_acc_input: e.detail.value
     })
   },
+  //绑定输入账号框
   bindKeyInput_mm: function (e) {
     this.setData({
       wifi_mm_input: e.detail.value
     })
   },
+  //绑定输入密码框
   handleCheckboxChange({ detail = {} }) {
       if (this.data.mima === '显示密码') {
           this.setData({
@@ -117,14 +121,10 @@ Page({
       }); 
       }
   },
+  //获取焦点
   focus(){
     this.setData({
       focus:true
-    })
-  },
-  blur(){
-    this.setData({
-      focus:false
     })
   },
   onLoad: function (options) {
