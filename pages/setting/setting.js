@@ -8,9 +8,64 @@ Page({
     bindWIFISSID : '',
     bindState:'',
     isBindWifi : false,
+    wifiList: [],
 
   },
+  
+  getWifiList() {
+    wx.startWifi({
+      success: (res) => {
+        wx.showToast({
+          title: '搜索WIFI中',
+          icon:'loading',
+          duration:5000,
+          success: () => {
+            wx.getWifiList({
+              success: (res) => {
+                console.log("getWifiList=" + res);
+                wx.showToast({
+                  title: '已搜索到',
+                  icon:'success',
+                  duration:1000
+                })
+                this.showWifiListOn();
+              },
+            })
+          },
+          fail:()=> {
+            wx.showToast({
+              title: '搜索失败！',
+              icon:'error'
+            })
+          }
+        })
+      },
+    })
+  },
+  showWifiListOn(){
+    var that = this;
+    var showWifiList = new Array();
+    wx.onGetWifiList((result) => {
+      that.setData({
+        wifiList: result.wifiList
+      })
+      var list = this.data.wifiList;
+      for (let index = 0; index < list.length && index < 6; index++) {
+        showWifiList.push(list[index].SSID);
+        console.log(list[index].SSID);
+      }
+      wx.showActionSheet({
+        itemList: showWifiList,
+        success (res) {
+          console.log(res.tapIndex)
+        },
+        fail (res) {
+          console.log(res.errMsg)
+        }
+      })
+    })
 
+  },
   tapName: function(event) {
     this.setData({
       loading: !this.data.loading
@@ -58,28 +113,7 @@ Page({
   },
 
   clickTest: function() {
-    const udp = wx.createUDPSocket();
-    udp.bind();
-    udp.connect({
-      address: '10.10.100.254',
-      port:'48899'
-    })
-    udp.onListening(function(){
-
-    });
-    udp.onMessage(function(res){
-      wx.showToast({
-        title: res.message,
-        duration:1000
-      })
-      console.log(res.message)
-    })
-    const mes = '+++'
-    udp.write({
-      address: '10.10.100.254',
-      port: 48899,
-      message: mes,
-    })
+    
   },
   /**
    * 生命周期函数--监听页面加载

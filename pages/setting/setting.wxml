@@ -1,7 +1,7 @@
 <!--pages/setting/setting.wxml-->
 <i-cell-group>
 <i-cell title="当前绑定WIFI：{{bindWIFISSID}}"></i-cell>
-<i-cell title="{{bindState}}" is-link></i-cell>
+<i-cell title="{{bindState}}" bind:click="getWifiList" is-link></i-cell>
 </i-cell-group>
 
-<i-button bind:click="clickTest"  type="info" shape="circle" size="large">登录</i-button>
+<!-- <i-button bind:click="clickTest"  type="info" shape="circle" size="large">登录</i-button> -->
