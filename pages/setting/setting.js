@@ -30,7 +30,7 @@ Page({
                   icon:'success',
                   duration:1500
                 })
-                this.showWifiListOn();
+                 this.showWifiListOn();
               },
             })
           },
@@ -79,8 +79,6 @@ Page({
                   that.send_acc_mm_udp(wifiSSID, wifipwd);
                 }
               }
-
-
             })
           }
           
