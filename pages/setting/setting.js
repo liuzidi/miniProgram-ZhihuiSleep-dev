@@ -5,11 +5,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+
     bindWIFISSID : '',
     bindState:'',
     isBindWifi : false,
     wifiList: [],
+    
 
   },
   
@@ -27,7 +28,7 @@ Page({
                 wx.showToast({
                   title: '已搜索到',
                   icon:'success',
-                  duration:1000
+                  duration:1500
                 })
                 this.showWifiListOn();
               },
@@ -52,13 +53,37 @@ Page({
       })
       var list = this.data.wifiList;
       for (let index = 0; index < list.length && index < 6; index++) {
-        showWifiList.push(list[index].SSID);
+        showWifiList.push(list[index].SSID + ' 强度 ：' + list[index].signalStrength);
         console.log(list[index].SSID);
       }
       wx.showActionSheet({
         itemList: showWifiList,
         success (res) {
-          console.log(res.tapIndex)
+          if (res.tapIndex >= 0) {
+            var resIndex = res.tapIndex;
+            var wifiSSID = '';
+            var wifiBssid = '';
+            var wifipwd = '';
+            wx.showModal({
+              cancelColor: 'cancelColor',
+              title: '请输入WIFI密码，使WIFI模块连接到此WIFI',
+              editable: true,
+              showCancel:true,
+              confirmText:'绑定',
+              success(res) {
+                if (res.confirm) {
+                  console.log(that.data.wifiList)
+                  wifiSSID = that.data.wifiList[resIndex].SSID;
+                  wifiBssid = that.data.wifiList[resIndex].BSSID;
+                  wifipwd = res.content;
+                  that.send_acc_mm_udp(wifiSSID, wifipwd);
+                }
+              }
+
+
+            })
+          }
+          
         },
         fail (res) {
           console.log(res.errMsg)
